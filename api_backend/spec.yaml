@@ -20,7 +20,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref : "#/components/schemas/Client"
+                type: object
+                properties:
+                  data:
+                      $ref : "#/components/schemas/Client"
         400:
           description: Failed to create Client. Error from client . "Check for response's error atributes"
           content:
@@ -33,8 +36,106 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServerSideError"
-
-
+  /api/client/latest:
+    get:
+      summary: Get all clients (20 last clients) 
+      description: Get 20 latest clients ... request GET to /api/client/all to get all clients
+      responses:
+        200:
+          description: got 20 latest client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Client"
+        500:
+          description: Error occured on the server
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorGeneral"
+  /api/client/all:
+    get:
+      summary: Get all clients  
+      description: Get allclients ... 
+      responses:
+        200:
+          description: got all client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Client"
+        500:
+          description: Error occured on the server
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorGeneral"
+  /api/client/:id:
+    get:
+      summary: Get a siignle client by id
+      description: Get the client whose id is specified in the path parameter of he request
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idClient of the target client 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: Got the client
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Client"
+        404:
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ErrorNotFound"
+  /api/client/delete/:id :
+    delete:
+      parameters:
+        - name: id
+          in: path
+          description: idClient of the target client 
+          required : true
+          schema:
+            type : integer
+            example : 12
+      summary: Delete a client by idClient
+      description : Delete a client whose id is specified in the path parameter of the request
+      responses:
+        200:
+          description: Client deleted succefully ... returns the deleted cient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data : 
+                    $ref: "#/components/schemas/Client"
+        404:
+          description: Client not found
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ErrorNotFound"
 components:
   schemas:
     Client : 
@@ -85,6 +186,18 @@ components:
     ServerSideError : 
       type: object
       properties:
-        message : 
+        error: 
           type: string
           example: Error was occured, please reload . If persists, please contact the company
+    ErrorGeneral:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Error has occured on the server
+    ErrorNotFound:
+      type: object
+      properties:
+        error:
+          type: string
+          example : occurence not found

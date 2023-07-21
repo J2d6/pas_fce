@@ -4,6 +4,89 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const DeleteClient = async function (req, res, next) {
+    const response = {}
+    try {
+        const deletedClient = await prisma.client.delete({
+            where : {
+                idClient : +req.params.id
+            }
+        });
+
+        if (deletedClient) {
+            response.data = deletedClient
+            res.status(200).json(response);
+        } else {
+            response.error = "Client not found"
+            res.status(404).json(response);
+        }
+    } catch (error) {
+        response.error = error.message
+        res.status(500).json(response);
+    }
+}
+
+exports.DeleteClient = DeleteClient;
+
+
+const Readclient = async function (req, res, next) {
+    const response = {}
+    try {
+        const client = await prisma.client.findUnique({
+            where : {
+                idClient : +req.params.id
+            }
+        })
+        if (client) {
+            console.log("ATO");
+            response.data = client;
+            res.status(200).json(response); 
+            res.end()
+        } else {          
+            response.error = "Client not found"
+            res.status(404).json(response);  
+        }
+
+
+    } catch (error) {
+        response.error = error.message;
+        res.status(500).json(response);
+    }
+}
+exports.Readclient = Readclient;
+
+const GetAllClientsController = async function (req, res, next) {
+    const response = {}
+    try {
+        const allClients = await prisma.client.findMany();
+        response.data = allClients;
+        res.status(200).json(response);
+    } catch (error) {
+        response.error = error.message;
+        res.status(500).json(response);
+    }
+}
+exports.GetAllClientsController = GetAllClientsController
+const GetLatestsClientController = async function (req, res, next) {
+    const response = {}
+    try {
+        const latestClients = await prisma.client.findMany({
+            take : 20,
+            orderBy : {
+                idClient : "desc"
+            }
+        });
+
+        response.data = latestClients;
+        res.status(200).json(response);
+
+    } catch (error) {
+        response.error = error.message;
+        res.status(500).json(response)
+    }
+}
+exports.GetLatestsClientController = GetLatestsClientController;
+
 const CreateClientController = async function (req, res) {
     try {
         const client =  await CreateClient(req.body)
