@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Voyage {
+  idVoyage  Int @id @default(autoincrement())
+  dateVoyage DateTime 
+  destination String 
+  depart String
+  heureDepart DateTime
+
+}
+
+model Train {
+  numTrain Int @id @default(autoincrement())
+  nbWagon Int 
+}
+
+model Wagon {
+  numWagon Int @id
+  quantitePlace Int
+}
+
+model Categorie {
+  idCategorie Int @id @default(autoincrement())
+  nomCaegorie String @unique
+}
+
+model Client {
+  nomClient String 
+  idClient Int @id @default(autoincrement())
+  contactClient String @unique
+  emailClient String @unique
+}
+
+// model Place {
+
+// }

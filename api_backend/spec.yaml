@@ -1,0 +1,90 @@
+openapi : 3.0.0
+info:
+  title : API PAS FCE
+  version : 1.0.0
+  description : API backend pour PAS FCE
+paths:
+  /api/client/create:
+    post:
+      summary: Create client
+      description: Create client occurence in database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/client"
+      responses:
+        201:
+          description: Client created succefully
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/Client"
+        400:
+          description: Failed to create Client. Error from client . "Check for response's error atributes"
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/CreateClientErrorFromClient"
+        500:
+          description: Server side Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerSideError"
+
+
+components:
+  schemas:
+    Client : 
+      type: object
+      properties:
+        idClient:
+          type: integer
+          example : 123
+        nomClient : 
+          type: string
+          example: Dimbiniaina Jordany
+        emailClient : 
+          type : string
+          example : jd@gmail.com
+        contactClient : 
+          type: string
+          example : "0327875522"
+    client : 
+      type: object
+      properties:
+        nomClient : 
+          type: string
+          example: Dimbiniaina Jordany
+        emailClient : 
+          type : string
+          example : jd@gmail.com
+        contactClient : 
+          type: string
+          example : "0327875522"
+    CreateClientErrorFromClient:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            nom:
+              type: string
+              example: "Name must be not empty and do not contain specials characters, numbers or spaces."
+            email:
+              type : string
+              example : Already existst
+            contact: 
+              type: string
+              example: Already exists
+            validation : 
+              type: string
+              example: Invalid email syntax
+    ServerSideError : 
+      type: object
+      properties:
+        message : 
+          type: string
+          example: Error was occured, please reload . If persists, please contact the company

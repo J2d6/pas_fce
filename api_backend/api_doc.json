@@ -1,0 +1,22 @@
+{
+    "openapi" : "3.0.0",
+    "info" : {
+        "title" : " API PAS FCE",
+        "version" : "1.0.0",
+        "description": "API pour reservation de train PAS FCE"
+    },
+    "components" : {
+        "schemas" : {
+            "Client" : {
+                "type" : "object",
+                "properties" : {
+                    "idClient" : {
+                        "type" : "integer" ,
+                        "example" : 123
+                    }
+                }
+            }
+        }
+    }
+
+}
