@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var clientRouter = require("./routes/client");
 var categorieController = require("./routes/categorie");
+var wagonController = require("./routes/wagon");
 
 var app = express();
 
@@ -20,4 +21,5 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/client', clientRouter);
 app.use('/api/categorie', categorieController);
+app.use('/api/wagons', wagonController);
 module.exports = app;

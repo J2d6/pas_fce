@@ -1,7 +1,6 @@
-
-
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+
 
 const DeleteClient = async function (req, res, next) {
     const response = {}
