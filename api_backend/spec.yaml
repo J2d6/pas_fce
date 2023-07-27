@@ -36,6 +36,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServerSideError"
+<<<<<<< HEAD
   /api/client/latest:
     get:
       summary: Get all clients (20 last clients) 
@@ -43,6 +44,42 @@ paths:
       responses:
         200:
           description: got 20 latest client
+=======
+  /api/categorie/create:
+    post:
+      summary: create new Wagon Category
+      description: create a new Wagon Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/categorie"
+      responses:
+        201:
+          description: new Category created succefully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref : "#/components/schemas/ServerSideError"
+  /api/categorie/all:
+    get:
+      responses:
+        200:
+          description: got all categories
+>>>>>>> addCategorie
           content:
             application/json:
               schema:
@@ -51,6 +88,7 @@ paths:
                   data:
                     type: array
                     items:
+<<<<<<< HEAD
                       $ref : "#/components/schemas/Client"
         500:
           description: Error occured on the server
@@ -65,6 +103,28 @@ paths:
       responses:
         200:
           description: got all client
+=======
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+  /api/categorie/:id:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idCategorie of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a category whose id is given
+>>>>>>> addCategorie
           content:
             application/json:
               schema:
@@ -73,6 +133,7 @@ paths:
                   data:
                     type: array
                     items:
+<<<<<<< HEAD
                       $ref : "#/components/schemas/Client"
         500:
           description: Error occured on the server
@@ -136,6 +197,17 @@ paths:
             application/json:
               schema:
                 $ref : "#/components/schemas/ErrorNotFound"
+=======
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+        
+
+>>>>>>> addCategorie
 components:
   schemas:
     Client : 
@@ -189,6 +261,7 @@ components:
         error: 
           type: string
           example: Error was occured, please reload . If persists, please contact the company
+<<<<<<< HEAD
     ErrorGeneral:
       type: object
       properties:
@@ -201,3 +274,26 @@ components:
         error:
           type: string
           example : occurence not found
+=======
+    Categorie:
+      type: object
+      properties:
+        idCategorie : 
+          type : integer
+          example : 1
+        nomCategorie :
+          type : string
+          example : "VIP"
+        prixCategorie :
+          type: integer
+          example: 50000
+    categorie:
+      type: object
+      properties:
+        nomCategorie :
+          type : string
+          example : "VIP"
+        prixCategorie :
+          type: integer
+          example: 50000
+>>>>>>> addCategorie
