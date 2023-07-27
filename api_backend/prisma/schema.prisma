@@ -31,7 +31,9 @@ model Wagon {
 
 model Categorie {
   idCategorie Int @id @default(autoincrement())
-  nomCaegorie String @unique
+  nomCategorie String @unique
+  nbPlace Int
+  prixCategorie Int
 }
 
 model Client {

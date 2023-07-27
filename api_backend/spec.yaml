@@ -33,7 +33,84 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServerSideError"
-
+  /api/categorie/create:
+    post:
+      summary: create new Wagon Category
+      description: create a new Wagon Category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/categorie"
+      responses:
+        201:
+          description: new Category created succefully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    $ref : "#/components/schemas/ServerSideError"
+  /api/categorie/all:
+    get:
+      responses:
+        200:
+          description: got all categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+  /api/categorie/:id:
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idCategorie of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a category whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+        
 
 components:
   schemas:
@@ -88,3 +165,24 @@ components:
         message : 
           type: string
           example: Error was occured, please reload . If persists, please contact the company
+    Categorie:
+      type: object
+      properties:
+        idCategorie : 
+          type : integer
+          example : 1
+        nomCategorie :
+          type : string
+          example : "VIP"
+        prixCategorie :
+          type: integer
+          example: 50000
+    categorie:
+      type: object
+      properties:
+        nomCategorie :
+          type : string
+          example : "VIP"
+        prixCategorie :
+          type: integer
+          example: 50000
