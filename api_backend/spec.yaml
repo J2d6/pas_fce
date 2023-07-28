@@ -266,6 +266,22 @@ paths:
                     type: array
                     items:
                       $ref : "#/components/schemas/Wagon"
+  /api/wagons/all/dispo:
+    summary: get all wagons dispo
+    description: to get all wagons dispo to connect to a train
+    get:
+      responses:
+        200:
+          description: got all wagons dispo 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Wagon"
         500:
           description: an error has occured
           content:

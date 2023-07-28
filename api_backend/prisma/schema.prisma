@@ -22,12 +22,15 @@ model Voyage {
 model Train {
   numTrain Int @id @default(autoincrement())
   nbWagon Int 
+  wagons Wagon[]
 }
 
 model Wagon {
   idWagon Int @id @default(autoincrement())
   categorie Categorie @relation(fields: [idCategorie], references: [idCategorie])
   idCategorie Int
+  train Train? @relation(fields: [numTrain], references: [numTrain])
+  numTrain Int? 
 }
 
 model Categorie {
