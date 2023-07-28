@@ -6,6 +6,13 @@ info:
 paths:
   /api/client/auth:
     post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref : "#/components/schemas/client"
+ 
       summary: Authenticate a client login ... required a client password and contact
       description: request this endpoint to authenticate a client with his contact and password in the request body
       responses:
