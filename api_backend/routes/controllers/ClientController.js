@@ -113,8 +113,8 @@ exports.CreateClientController = CreateClientController;
  * @returns {response} with data or error from client
  * @throws {Error} if an error has occured on the serverside
  */
-const CreateClient = async ({nomClient, contactClient, emailClient}) => {
-    const client = {nomClient, contactClient, emailClient}
+const CreateClient = async ({nomClient, contactClient, emailClient, passwordClient}) => {
+    const client = {nomClient, contactClient, emailClient, passwordClient}
     const errors = {};
     const response = {};
 
@@ -279,3 +279,36 @@ const isValidContact =  function (contact) {
 }
 exports.isValidContact = isValidContact ;
 
+
+
+const authClient = async function (contact) {
+    try {
+        const client = await prisma.client.findUnique({
+            where : {
+                contactClient : contact
+            }
+        })
+
+        if (client) {
+            return true
+        } 
+        throw new Error("Incorrect password")
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+const authClientController = async function (req, res, next) {
+    const response = {} ;
+    try {
+        const auth =  await authClient(req.body.contact);
+        if (auth) {
+            response.access = true
+            res.status(200).json(response)
+        } 
+    } catch (error) {
+        response.error = error.message;
+        res.status(500).json(response);
+    }
+}
+
+exports.authClientController = authClientController;

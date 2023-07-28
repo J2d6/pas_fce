@@ -43,6 +43,7 @@ model Client {
   idClient Int @id @default(autoincrement())
   contactClient String @unique
   emailClient String @unique
+  passwordClient String 
 }
 
 // model Place {

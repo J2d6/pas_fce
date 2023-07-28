@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const  { CreateClientController, GetLatestsClientController , GetAllClientsController, Readclient, DeleteClient} = require("./controllers/ClientController");
+const  { CreateClientController, GetLatestsClientController , GetAllClientsController, Readclient, DeleteClient, authClientController} = require("./controllers/ClientController");
 
 router.post("/create", function (req, res) {
     CreateClientController(req, res);
@@ -21,6 +21,8 @@ router.get("/:id", function (req, res, next) {
 router.delete("/delete/:id", function (req, res, next) {
     DeleteClient(req, res, next)
 })
-
+router.get("/auth", function(req, res, next){
+    authClientController(req, res, next);
+})
 
 module.exports = router ;

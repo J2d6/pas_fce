@@ -4,6 +4,33 @@ info:
   version : 1.0.0
   description : API backend pour PAS FCE
 paths:
+  /api/client/auth:
+    post:
+      summary: Authenticate a client login ... required a client password and contact
+      description: request this endpoint to authenticate a client with his contact and password in the request body
+      responses:
+        200:
+          description: authneticate
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access:
+                    type: string
+                    example : allow
+            
+        500:
+          description: Error has occured 
+          content:
+              application/json:
+                schema:
+                   type: object
+                   properties:
+                    error : 
+                       type : string 
+                       example : Incorrect password
+                     
   /api/client/create:
     post:
       summary: Create client
@@ -320,6 +347,9 @@ components:
         contactClient : 
           type: string
           example : "0327875522"
+        passwordClient:
+          type : string
+          example : s3cur3
     client : 
       type: object
       properties:
@@ -332,6 +362,9 @@ components:
         contactClient : 
           type: string
           example : "0327875522"
+        passwordClient:
+          type : string
+          example : s3cur3
     CreateClientErrorFromClient:
       type: object
       properties:
