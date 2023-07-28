@@ -21,7 +21,7 @@ router.get("/:id", function (req, res, next) {
 router.delete("/delete/:id", function (req, res, next) {
     DeleteClient(req, res, next)
 })
-router.get("/auth", function(req, res, next){
+router.post("/auth", function(req, res, next){
     authClientController(req, res, next);
 })
 
