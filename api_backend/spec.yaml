@@ -166,6 +166,8 @@ paths:
                   error:
                     $ref : "#/components/schemas/ServerSideError"
   /api/categorie/all:
+    summary: to get all categories dispo
+    description: to get all the categories 
     get:
       responses:
         200:
@@ -178,13 +180,129 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref : "#/components/schemas/Client"
+                      $ref : "#/components/schemas/Categorie"
         500:
-          description: Error occured on the server
+          description: an error has occured
           content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/ErrorGeneral"
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+
+  /api/categorie/:id:
+    summary: to get infos about a categorie
+    description: to get infos about a categorie whose id is given
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idCategorie of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a category whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Categorie"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+
+  /api/wagons/:id:
+    summary: to get infos about a wagon
+    description: to get infos about a specific wagon whose id is given
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idWagon of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a wagons whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Wagon"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+        
+  /api/wagons/:
+    summary: get all wagons
+    description: to get all wagons to connect to a train
+    get:
+      responses:
+        200:
+          description: got all wagons
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/Wagon"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
+
+  /api/wagons/delete/:id :
+    summary: to delete a wagon whose id was specified
+    description: delete a wagon 
+    get:
+      parameters:
+        - name: id
+          in: path
+          required : true
+          description: idWagon of the target categorie 
+          schema:
+            type : integer
+            example : 12
+      responses:
+        200:
+          description: get a wagon whose id is given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref : "#/components/schemas/wagon"
+        500:
+          description: an error has occured
+          content:
+            application/json:
+              schema:
+                $ref : "#/components/schemas/ServerSideError"
 components:
   schemas:
     Client : 
@@ -282,3 +400,12 @@ components:
           example : 3
         categorie : 
           $ref: "#/components/schemas/Categorie"
+    wagon:
+      type: object
+      properties:
+        idWagon:
+          type: integer
+          example: 165
+        idCategorie : 
+          type:  integer
+          example : 3
