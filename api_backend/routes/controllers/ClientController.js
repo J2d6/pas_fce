@@ -1,30 +1,36 @@
 const { PrismaClient } = require("@prisma/client");
+const { response } = require("express");
 const prisma = new PrismaClient();
 
-
-const DeleteClient = async function (req, res, next) {
-    const response = {}
-    try {
-        const deletedClient = await prisma.client.delete({
-            where : {
-                idClient : +req.params.id
-            }
-        });
-
-        if (deletedClient) {
-            response.data = deletedClient
-            res.status(200).json(response);
-        } else {
-            response.error = "Client not found"
-            res.status(404).json(response);
+const DeleteClient = async function (idClient) {
+   try {
+    const deletedClient = await prisma.client.delete({
+        where : {
+            idClient : +idClient
         }
+    })
+    if (deletedClient) {
+        return deletedClient;
+    } else {
+        throw new Error("Clientnot found")
+    }
+   } catch (error) {
+    throw new Error(error.message)
+   } 
+}
+const DeleteClientController = async function (req, res, next) {
+    const response = {} ;
+    try {
+        const deletedClient = await DeleteClient(req.params.id);
+        response.data = deletedClient;
+        res.status(200).json(response)
     } catch (error) {
-        response.error = error.message
+        response.error = error.message;
         res.status(500).json(response);
     }
 }
 
-exports.DeleteClient = DeleteClient;
+exports.DeleteClientController = DeleteClientController;
 
 
 const Readclient = async function (req, res, next) {
