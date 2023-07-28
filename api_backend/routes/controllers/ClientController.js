@@ -298,18 +298,25 @@ const authClient = async function (contact) {
         if (client) {
             return true
         } 
-        throw new Error("Incorrect password")
+        throw new Error("Account not found")
     } catch (error) {
         throw new Error(error.message);
     }
 }
+exports.authClient = authClient
 const authClientController = async function (req, res, next) {
     const response = {} ;
     try {
-        const auth =  await authClient(req.body.contact);
-        if (auth) {
-            response.access = true
-            res.status(200).json(response)
+        const authClientHost =  await authClient(req.body.contact);
+        if (authClient) {
+            if (authClientHost.passwordClient === req.body.passwordClient) {
+                response.access = true
+                res.status(200).json(response)
+            } else {
+                response.access = false
+                res.status(400).json(response)
+            }
+
         } 
     } catch (error) {
         response.error = error.message;

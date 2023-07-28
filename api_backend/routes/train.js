@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { CreateTrainController } = require("./controllers/TrainController")
+const { CreateTrainController } = require("./controllers/TrainConroller")
 
 
 router.post("/create", (req, res, next) => {
