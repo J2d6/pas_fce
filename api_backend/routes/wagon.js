@@ -1,5 +1,5 @@
 const express = require("express");
-const { createNewWagonController, DeleteWagonController, GetWagonByIdController, GetAllWagonsController } = require("./controllers/WagonController");
+const { createNewWagonController, DeleteWagonController, GetWagonByIdController, GetAllWagonsController, GetDispoWagonsController } = require("./controllers/WagonController");
 const router = express.Router();
 
 
@@ -18,4 +18,5 @@ router.get("/", (req, res, next) => {
     GetAllWagonsController(req, res, next);
 })
 
+router.get("/all/dispo", (req, res, next) => GetDispoWagonsController(req, res, next) )
 module.exports = router ;

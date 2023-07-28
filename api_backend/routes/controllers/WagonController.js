@@ -145,3 +145,34 @@ const createNewWagon = async function createNewWagon(idCategorie) {
     } 
   }
   exports.GetAllWagonsController = GetAllWagonsController;
+
+
+  const GetDispoWagons  = async function () {
+    try {
+        const allWagons = await prisma.wagon.findMany({
+            where : {
+                numTrain : null
+            },
+            include : {
+                categorie : true
+            }
+        });
+        return allWagons;
+    } catch (error) {
+        throw new Error(error.message); 
+    } finally {
+        await prisma.$disconnect()
+    }
+  }
+  const GetDispoWagonsController = async function (req, res, next) {
+    const response = {};
+    try {
+        const allwagon = await GetDispoWagons();
+        response.data = allwagon;
+        res.status(200).json(response);
+    } catch (error) {
+        response.error = error.message;
+        res.status(500).json(response);
+    } 
+  }
+  exports.GetDispoWagonsController = GetDispoWagonsController
